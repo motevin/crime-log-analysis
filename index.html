@@ -1,52 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
+    <meta charset="UTF-8">
     <title>Analyzing Northeastern&#39;s Crime Log by motevin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <a id="forkme_banner" href="https://github.com/motevin/crime-log-analysis">View on GitHub</a>
-    <div class="shell">
+    <section class="page-header">
+      <h1 class="project-name">Analyzing Northeastern&#39;s Crime Log</h1>
+      <h2 class="project-tagline">Bostonography Final Project - Dan Rhim &amp; Tevin Otieno</h2>
+      <a href="https://github.com/motevin/crime-log-analysis" class="btn">View on GitHub</a>
+      <a href="https://github.com/motevin/crime-log-analysis/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/motevin/crime-log-analysis/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>Analyzing Northeastern&#39;s Crime Log</h1>
-            <h2>Bostonography Final Project - Dan Rhim &amp; Tevin Otieno</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
-
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/motevin/crime-log-analysis/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/motevin/crime-log-analysis/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
-
-
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <h3>
+    <section class="main-content">
+      <h3>
 <a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Introduction</h3>
 
 <p>Campus safety is a crucially important yet often overlooked part of college life. Especially once students are already in university, safety is often discussed big-picture. It's not uncommon to hear platitudes like "Columbus Ave is sketchy at night". Our project aims to quantitatively explore crime and safety on Northeastern University's campus by analyzing data from the Northeastern University Police Department incident reports. </p>
@@ -69,41 +42,128 @@ The reports were in a pdf, which we used <a href="https://github.com/tabulapdf/t
 png(<span class="pl-s"><span class="pl-pds">"</span>wordcloud.png<span class="pl-pds">"</span></span>, <span class="pl-v">width</span><span class="pl-k">=</span><span class="pl-c1">1280</span>,<span class="pl-v">height</span><span class="pl-k">=</span><span class="pl-c1">800</span>)
 wordcloud(names(<span class="pl-smi">tab</span>),as.numeric(<span class="pl-smi">tab</span>),<span class="pl-v">scale</span> <span class="pl-k">=</span> c(<span class="pl-c1">1</span>, <span class="pl-c1">0.5</span>), <span class="pl-v">random.order</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>, <span class="pl-v">colors</span><span class="pl-k">=</span>brewer.pal(<span class="pl-c1">9</span>, <span class="pl-s"><span class="pl-pds">"</span>Set1<span class="pl-pds">"</span></span>))</pre></div>
 
-<div class="highlight highlight-source-python"><pre>df3 <span class="pl-k">=</span> pd.read_csv(<span class="pl-s"><span class="pl-pds">"</span>{CSV FILE}<span class="pl-pds">"</span></span>, <span class="pl-v">sep</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>)
-splits <span class="pl-k">=</span> df3[<span class="pl-s"><span class="pl-pds">'</span>INCIDENT<span class="pl-pds">'</span></span>].str.split(<span class="pl-s"><span class="pl-pds">'</span> - <span class="pl-pds">'</span></span>)
-df3[<span class="pl-s"><span class="pl-pds">'</span>INCIDENT_MIN<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> splits.str[<span class="pl-c1">0</span>]
-df3 <span class="pl-k">=</span> pd.crosstab(df3[<span class="pl-s"><span class="pl-pds">'</span>LOCATION<span class="pl-pds">'</span></span>], df3[<span class="pl-s"><span class="pl-pds">'</span>INCIDENT_MIN<span class="pl-pds">'</span></span>])
+<p><img src="http://i.imgur.com/SVl5UPD.png" alt="Incidents"></p>
 
-df3[<span class="pl-s"><span class="pl-pds">'</span>TOTAL_COL<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> df3.sum(<span class="pl-v">axis</span><span class="pl-k">=</span><span class="pl-c1">1</span>)
-df3.sort_values(<span class="pl-v">by</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>TOTAL_COL<span class="pl-pds">'</span></span>, <span class="pl-v">axis</span><span class="pl-k">=</span><span class="pl-c1">0</span>, <span class="pl-v">inplace</span><span class="pl-k">=</span><span class="pl-c1">True</span>, <span class="pl-v">ascending</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
-df3 <span class="pl-k">=</span> df3.head(<span class="pl-v">n</span><span class="pl-k">=</span><span class="pl-c1">25</span>)
-df3.drop(<span class="pl-s"><span class="pl-pds">'</span>TOTAL_COL<span class="pl-pds">'</span></span>, <span class="pl-v">axis</span><span class="pl-k">=</span><span class="pl-c1">1</span>, <span class="pl-v">inplace</span><span class="pl-k">=</span><span class="pl-c1">True</span>)
+<p>We were surprised to see how precise these incident reports were, as we found a count of 132 unique incidents reported on campus in 2016. Some of the most frequent reports were incidents regarding suspicious activity, well being or people on campus, medical, drugs, and larceny. </p>
 
-fig, ax <span class="pl-k">=</span> plt.subplots()
-heatmap <span class="pl-k">=</span> ax.pcolor(df3, <span class="pl-v">cmap</span><span class="pl-k">=</span>plt.cm.Blues, <span class="pl-v">alpha</span><span class="pl-k">=</span><span class="pl-c1">5</span>)
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">dtm</span> <span class="pl-k">&lt;-</span> TermDocumentMatrix(<span class="pl-smi">logsCorpus</span>)
+<span class="pl-smi">m</span> <span class="pl-k">&lt;-</span> as.matrix(<span class="pl-smi">dtm</span>)
+<span class="pl-smi">tab</span> <span class="pl-k">&lt;-</span> sort(<span class="pl-smi">tab</span>, <span class="pl-v">decreasing</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>)
+<span class="pl-smi">d</span> <span class="pl-k">&lt;-</span> <span class="pl-k">data.frame</span>(<span class="pl-v">freq</span><span class="pl-k">=</span><span class="pl-smi">tab</span>)
+head(<span class="pl-smi">d</span>, <span class="pl-c1">133</span>)</pre></div>
 
-fig <span class="pl-k">=</span> plt.gcf()
-ax.set_frame_on(<span class="pl-c1">False</span>)
-ax.set_yticks(np.arange(df3.shape[<span class="pl-c1">0</span>])<span class="pl-k">+</span><span class="pl-c1">0.5</span>, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
-ax.set_xticks(np.arange(df3.shape[<span class="pl-c1">1</span>])<span class="pl-k">+</span><span class="pl-c1">0.5</span>, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
-ax.set_xticklabels(df3.columns, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
-ax.set_yticklabels(df3.index, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+<p>```                SUSPICIOUS ACTIVITY - SUSPICIOUS ACTIVITY       750
+2                                           MEDICAL - MEDICAL       535
+3                               WELL BEING - WELL BEING CHECK       244
+4                       ALCOHOL INVOLVED - INTOXICATED PERSON       206
+5                           LARCENY - LARCENY - FROM BUILDING       199
+6                                   OAA - OTHER - OAA - OTHER       190
+7                      MOTOR VEHICLE - MOTOR VEHICLE ACCIDENT        96
+8                        DRUGS - MARIJUANA, SUSPICIOUS OF USE        83
+9                                     NOISE - NOISE COMPLAINT        71
+10                                         FRAUD - FRAUD/SCAM        69
+11                           WELL BEING - ELEVATOR ENTRAPMENT        66
+12                            PROPERTY - CONFISCATED PROPERTY        63
+13               MOTOR VEHICLE - OAA - MOTOR VEHICLE ACCIDENT        59
+14                    SUSPICIOUS ACTIVITY - DISORDERLY PERSON        54
+15                                LARCENY - LARCENY - BICYCLE        48
+16                     MV VIOLATION - MOTOR VEHICLE VIOLATION        47
+17                     DRUGS - MARIJUANA, LESS THAN ONE OUNCE        40
+18                            LARCENY - LARCENY - SHOPLIFTING        36
+19            SUSPICIOUS ACTIVITY - OAA - SUSPICIOUS ACTIVITY        34
+20           MOTOR VEHICLE - MV STOP - PUBLIC SAFETY PURPOSES        32</p>
+
+<pre><code>An unexpected observation we found was that there was a high number of incidents of “Well Being - Elevator Entrapment.” We did not expect this at all, and it seems that it was reported so commonly that it had received its own incident name, as opposed to being categorized under “Well Being Check.” 
+
+On the other hand, at the bottom of the list there were few incidents regarding aggravated assault and sex crimes, which was a bit surprising. 
+</code></pre>
+
+<p>122                   MISSING PERSON - MISSING PERSON - FOUND         1
+123                MOTOR VEHICLE - MOTOR VEHICLE THEFT - AUTO         1
+124                                        NOISE - LOUD PARTY         1
+125                          PROPERTY DAMAGE - OAA - GRAFFITI         1
+126              ROBBERY - OAA - NU - ROBBERY - ARMED - KNIFE         1
+127            SEX CRIME - OAA - LEWD AND LASCIVIOUS BEHAVIOR         1
+128                  SEX CRIME - OAA - NU - SEXUAL HARASSMENT         1
+129                    SEX CRIME - OAA - TOUCHING AND GROPING         1
+130          SUSPICIOUS ACTIVITY - OAA - INVESTIGATE PREMISES         1
+131                              WEAPONS - FIREARMS VIOLATION         1
+132                               WEAPONS - WEAPONS VIOLATION         1</p>
+
+<pre><code>
+According to a study by the Bureau of Justice Statistics, about 21% of undergraduate females had come across sexual assault some time in their college life. However, this crime log data shows that there were few reports of sex crimes, which could mean that many people are afraid to speak up about it. In an [article](https://www.bostonglobe.com/metro/2016/11/03/student-sues-northeastern-over-handling-sexual-assault-case/3pGiXpweQ3VXkDgRUMrYiM/story.html) by the Boston Globe, Mark F. Itzkowitz, an attorney for an alleged sex crime victim, had said that sex crimes were under-reported on the Northeastern University campus. 
+
+### Locations
+Next, we had looked into which areas on campus had reported more or less crimes. 
+![Locations](http://i.imgur.com/YiKA9jQ.png)
+
+We saw that over the past year, there were 208 different locations that had reported incidents, but most of the incidents were reported off campus, which had reported almost three times the amount of the second-most reported area, Columbus Place. 
+</code></pre>
+
+<p>1                      OFF CAMPUS       325
+2                  COLUMBUS PLACE       112
+3                   MARINO CENTER       110
+4               HUNTINGTON AVENUE       108
+5                 COLUMBUS AVENUE        99
+6                     SPEARE HALL        97
+7    INT'L VILLAGE EAST RESIDENCE        84
+8            CURRY STUDENT CENTER        73
+9            RUGGLES MBTA STATION        63
+10                 TREMONT STREET        62
+11                  SNELL LIBRARY        61
+12                 FORSYTH STREET        57
+13                           YMCA        57
+14                   STETSON WEST        56
+15                HEMENWAY STREET        53
+16                   EAST VILLAGE        52
+17            ST. STEPHENS STREET        52
+18                   STETSON EAST        52
+19                     WHITE HALL        52
+20                    CARTER PARK        50
+21                 MATTHEWS ARENA        46</p>
+
+<pre><code>We also found that out of the student dorms, Speare Hall had reported the most crimes. We found that, regarding student dorms, the amount of incidents reported widely varies between each dorm, having found anywhere from 8 reports (Kerr Hall) to 97 reports (Speare Hall)
+
+We also made a heatmap to visualize the frequency of specific incidents at the most reported locations. 
+
+```{python}
+df3 = pd.read_csv("{CSV FILE}", sep=";")
+splits = df3['INCIDENT'].str.split(' - ')
+df3['INCIDENT_MIN'] = splits.str[0]
+df3 = pd.crosstab(df3['LOCATION'], df3['INCIDENT_MIN'])
+
+df3['TOTAL_COL'] = df3.sum(axis=1)
+df3.sort_values(by='TOTAL_COL', axis=0, inplace=True, ascending=False)
+df3 = df3.head(n=25)
+df3.drop('TOTAL_COL', axis=1, inplace=True)
+
+fig, ax = plt.subplots()
+heatmap = ax.pcolor(df3, cmap=plt.cm.Blues, alpha=5)
+
+fig = plt.gcf()
+ax.set_frame_on(False)
+ax.set_yticks(np.arange(df3.shape[0])+0.5, minor=False)
+ax.set_xticks(np.arange(df3.shape[1])+0.5, minor=False)
+ax.set_xticklabels(df3.columns, minor=False)
+ax.set_yticklabels(df3.index, minor=False)
 
 ax.invert_yaxis()
 ax.xaxis.tick_top()
 
-plt.xticks(<span class="pl-v">rotation</span><span class="pl-k">=</span><span class="pl-c1">90</span>)
+plt.xticks(rotation=90)
 
-ax <span class="pl-k">=</span> plt.gca()
-<span class="pl-k">for</span> t <span class="pl-k">in</span> ax.xaxis.get_major_ticks(): 
-    t.tick1On <span class="pl-k">=</span> <span class="pl-c1">False</span> 
-    t.tick2On <span class="pl-k">=</span> <span class="pl-c1">False</span> 
-<span class="pl-k">for</span> t <span class="pl-k">in</span> ax.yaxis.get_major_ticks(): 
-    t.tick1On <span class="pl-k">=</span> <span class="pl-c1">False</span> 
-    t.tick2On <span class="pl-k">=</span> <span class="pl-c1">False</span>  </pre></div>
+ax = plt.gca()
+for t in ax.xaxis.get_major_ticks(): 
+    t.tick1On = False 
+    t.tick2On = False 
+for t in ax.yaxis.get_major_ticks(): 
+    t.tick1On = False 
+    t.tick2On = False  
+</code></pre>
 
-<p><img src="http://i.imgur.com/yRfn1px.png" alt="Heatmap">
-We also made a heatmap to visualize the frequency of specific incidents at the most reported locations. Larceny, Medical and Suspicious Activity are the most frequent type of incidents across all the locations. 
+<p><img src="http://i.imgur.com/yRfn1px.png" alt="Heatmap"></p>
+
+<p>Larceny, Medical and Suspicious Activity are the most frequent type of incidents across all the locations. 
 Also of note, is "Larceny" is most frequently reported at Marino Center and Snell Library, which are studying hotspots that are often targets for theft. </p>
 
 <h3>
@@ -132,6 +192,12 @@ fig.autofmt_xdate()</pre></div>
 There's a lull in the summer, as there's usually less people on campus around that time. Another spike occurs at the beginning of the semester around September, when everyone is back on campus. </p>
 
 <h3>
+<a id="disposition" class="anchor" href="#disposition" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Disposition</h3>
+
+<p><img src="http://i.imgur.com/ZTvJe3S.png" alt="Disposition">
+We had found that there were only 19 dispositions regarding the incidents. The overwhelming majority of dispositions had been under either “Report filed” or “Services Rendered/No Report.” This shows us that most of the incidents reported are actually no big deal and can be dealt with very easily. There were also a low number of arrests made by the Boston Police Department at Northeastern, and an even lower amount of incidents that had been closed by state police, which is to be expected. We had found it surprising that there were almost 300 incidents that had nothing filed under “Disposition.”</p>
+
+<h3>
 <a id="challenges" class="anchor" href="#challenges" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Challenges</h3>
 
 <p>Our biggest challenge was getting the data into the desired format. We got the data as a pdf file from NUPD, which proved more inconvenient that we had thought.
@@ -153,23 +219,14 @@ We became intimately familiar with pdf layout and formatting standards (or lack 
 
 <p>Dan Rhim &amp; Tevin Otieno</p>
 
-<p>P.S. For the sake of speed, we ended up doing analysis in both Python and R, depending on technical ability and ease of use.</p>
-      </section>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/motevin/crime-log-analysis">Analyzing Northeastern&#39;s Crime Log</a> is maintained by <a href="https://github.com/motevin">motevin</a>.</span>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/motevin">motevin</a> can be found on <a href="https://github.com/motevin/crime-log-analysis">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
       </footer>
 
-    </div>
+    </section>
 
-    
+  
   </body>
 </html>
