@@ -28,7 +28,7 @@
         <span class="ribbon-outer">
           <span class="ribbon-inner">
             <h1>Analyzing Northeastern&#39;s Crime Log</h1>
-            <h2>Bostonography Final Project</h2>
+            <h2>Bostonography Final Project - Dan Rhim &amp; Tevin Otieno</h2>
           </span>
           <span class="left-tail"></span>
           <span class="right-tail"></span>
@@ -62,6 +62,77 @@ The reports were in a pdf, which we used <a href="https://github.com/tabulapdf/t
 <a id="incidents" class="anchor" href="#incidents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Incidents</h3>
 
 <p>The first thing we explored was the different <em>types</em> of incident reports. </p>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">tab</span> <span class="pl-k">&lt;-</span> table(<span class="pl-smi">logs</span><span class="pl-k">$</span><span class="pl-smi">INCIDENT</span>)
+<span class="pl-smi">logsCorpus</span> <span class="pl-k">&lt;-</span> Corpus(VectorSource(<span class="pl-smi">logs</span><span class="pl-k">$</span><span class="pl-smi">INCIDENT</span>))
+<span class="pl-smi">logsCorpus</span> <span class="pl-k">&lt;-</span> tm_map(<span class="pl-smi">logsCorpus</span>, <span class="pl-smi">PlainTextDocument</span>)
+png(<span class="pl-s"><span class="pl-pds">"</span>wordcloud.png<span class="pl-pds">"</span></span>, <span class="pl-v">width</span><span class="pl-k">=</span><span class="pl-c1">1280</span>,<span class="pl-v">height</span><span class="pl-k">=</span><span class="pl-c1">800</span>)
+wordcloud(names(<span class="pl-smi">tab</span>),as.numeric(<span class="pl-smi">tab</span>),<span class="pl-v">scale</span> <span class="pl-k">=</span> c(<span class="pl-c1">1</span>, <span class="pl-c1">0.5</span>), <span class="pl-v">random.order</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>, <span class="pl-v">colors</span><span class="pl-k">=</span>brewer.pal(<span class="pl-c1">9</span>, <span class="pl-s"><span class="pl-pds">"</span>Set1<span class="pl-pds">"</span></span>))</pre></div>
+
+<div class="highlight highlight-source-python"><pre>df3 <span class="pl-k">=</span> pd.read_csv(<span class="pl-s"><span class="pl-pds">"</span>{CSV FILE}<span class="pl-pds">"</span></span>, <span class="pl-v">sep</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>)
+splits <span class="pl-k">=</span> df3[<span class="pl-s"><span class="pl-pds">'</span>INCIDENT<span class="pl-pds">'</span></span>].str.split(<span class="pl-s"><span class="pl-pds">'</span> - <span class="pl-pds">'</span></span>)
+df3[<span class="pl-s"><span class="pl-pds">'</span>INCIDENT_MIN<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> splits.str[<span class="pl-c1">0</span>]
+df3 <span class="pl-k">=</span> pd.crosstab(df3[<span class="pl-s"><span class="pl-pds">'</span>LOCATION<span class="pl-pds">'</span></span>], df3[<span class="pl-s"><span class="pl-pds">'</span>INCIDENT_MIN<span class="pl-pds">'</span></span>])
+
+df3[<span class="pl-s"><span class="pl-pds">'</span>TOTAL_COL<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> df3.sum(<span class="pl-v">axis</span><span class="pl-k">=</span><span class="pl-c1">1</span>)
+df3.sort_values(<span class="pl-v">by</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>TOTAL_COL<span class="pl-pds">'</span></span>, <span class="pl-v">axis</span><span class="pl-k">=</span><span class="pl-c1">0</span>, <span class="pl-v">inplace</span><span class="pl-k">=</span><span class="pl-c1">True</span>, <span class="pl-v">ascending</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+df3 <span class="pl-k">=</span> df3.head(<span class="pl-v">n</span><span class="pl-k">=</span><span class="pl-c1">25</span>)
+df3.drop(<span class="pl-s"><span class="pl-pds">'</span>TOTAL_COL<span class="pl-pds">'</span></span>, <span class="pl-v">axis</span><span class="pl-k">=</span><span class="pl-c1">1</span>, <span class="pl-v">inplace</span><span class="pl-k">=</span><span class="pl-c1">True</span>)
+
+fig, ax <span class="pl-k">=</span> plt.subplots()
+heatmap <span class="pl-k">=</span> ax.pcolor(df3, <span class="pl-v">cmap</span><span class="pl-k">=</span>plt.cm.Blues, <span class="pl-v">alpha</span><span class="pl-k">=</span><span class="pl-c1">5</span>)
+
+fig <span class="pl-k">=</span> plt.gcf()
+ax.set_frame_on(<span class="pl-c1">False</span>)
+ax.set_yticks(np.arange(df3.shape[<span class="pl-c1">0</span>])<span class="pl-k">+</span><span class="pl-c1">0.5</span>, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+ax.set_xticks(np.arange(df3.shape[<span class="pl-c1">1</span>])<span class="pl-k">+</span><span class="pl-c1">0.5</span>, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+ax.set_xticklabels(df3.columns, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+ax.set_yticklabels(df3.index, <span class="pl-v">minor</span><span class="pl-k">=</span><span class="pl-c1">False</span>)
+
+ax.invert_yaxis()
+ax.xaxis.tick_top()
+
+plt.xticks(<span class="pl-v">rotation</span><span class="pl-k">=</span><span class="pl-c1">90</span>)
+
+ax <span class="pl-k">=</span> plt.gca()
+<span class="pl-k">for</span> t <span class="pl-k">in</span> ax.xaxis.get_major_ticks(): 
+    t.tick1On <span class="pl-k">=</span> <span class="pl-c1">False</span> 
+    t.tick2On <span class="pl-k">=</span> <span class="pl-c1">False</span> 
+<span class="pl-k">for</span> t <span class="pl-k">in</span> ax.yaxis.get_major_ticks(): 
+    t.tick1On <span class="pl-k">=</span> <span class="pl-c1">False</span> 
+    t.tick2On <span class="pl-k">=</span> <span class="pl-c1">False</span>  </pre></div>
+
+<p><img src="http://i.imgur.com/yRfn1px.png" alt="Heatmap">
+We also made a heatmap to visualize the frequency of specific incidents at the most reported locations. Larceny, Medical and Suspicious Activity are the most frequent type of incidents across all the locations. 
+Also of note, is "Larceny" is most frequently reported at Marino Center and Snell Library, which are studying hotspots that are often targets for theft. </p>
+
+<h3>
+<a id="time" class="anchor" href="#time" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Time</h3>
+
+<p>We also looked at <em>when</em> these reports occur
+First, we looked at frequency at each hour over the day.</p>
+
+<div class="highlight highlight-source-python"><pre>df <span class="pl-k">=</span> pd.read_csv(<span class="pl-s"><span class="pl-pds">"</span><span class="pl-c1">{CSV_FILE}</span><span class="pl-pds">"</span></span>, <span class="pl-v">sep</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>;<span class="pl-pds">"</span></span>, <span class="pl-v">parse_dates</span><span class="pl-k">=</span>[<span class="pl-s"><span class="pl-pds">'</span>DATE<span class="pl-pds">'</span></span>], <span class="pl-v">date_parser</span><span class="pl-k">=</span>date_parser)
+df <span class="pl-k">=</span> df.set_index(pd.DatetimeIndex(df[<span class="pl-s"><span class="pl-pds">'</span>DATE<span class="pl-pds">'</span></span>]))
+freq_hour <span class="pl-k">=</span> df.resample(<span class="pl-s"><span class="pl-pds">'</span>H<span class="pl-pds">'</span></span>).count()
+freq_hour
+fig, ax <span class="pl-k">=</span> plt.subplots(<span class="pl-c1">1</span>, <span class="pl-c1">1</span>)
+ax.plot(freq_hour[<span class="pl-s"><span class="pl-pds">'</span>DATE<span class="pl-pds">'</span></span>])
+ax.xaxis_date()
+fig.autofmt_xdate()</pre></div>
+
+<p><img src="http://i.imgur.com/psVItBj.png" alt="Frequency Day"></p>
+
+<p>As expected, the "busiest" hours are at night, starting around 10PM and peaking at 1AM, with a steady drop until the early morning, which boasts the least number of reports.</p>
+
+<p>We also looked at daily number of reports over the entire year
+<img src="http://i.imgur.com/XuLzU4g.png" alt="Frequency Year"></p>
+
+<p>There's a huge spike in reports around the end of March/Beginning of April, which we thought might align with the nice weather and the end of midterm season. 
+There's a lull in the summer, as there's usually less people on campus around that time. Another spike occurs at the beginning of the semester around September, when everyone is back on campus. </p>
+
+<h3>
+<a id="challenges" class="anchor" href="#challenges" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Challenges</h3>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Authors and Contributors</h3>
